@@ -12,7 +12,7 @@ export const createUser = mutation({
       name: args.name,
       email: args.email,
       role: args.role,
-      password: 0
+      // password is optional in schema, so we can omit it
     });
   },
 });

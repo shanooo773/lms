@@ -7,7 +7,7 @@ export default defineSchema({
   name: v.string(),
   email: v.string(),
   role: v.string(),
-  password: v.number(),
+  password: v.optional(v.number()),
 }),
 
 
