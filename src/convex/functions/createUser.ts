@@ -7,14 +7,13 @@ export const createUser = mutation({
     name: v.string(),
     email: v.string(),
     role: v.string(),
-    password: v.string(), // ✅ expects a string
   },
   handler: async (ctx, args) => {
     return await ctx.db.insert("users", {
       name: args.name,
       email: args.email,
       role: args.role,
-      password: 0
+      // password is optional in schema, so we can omit it
     });
   },
 });
