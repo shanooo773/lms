@@ -7,6 +7,7 @@ export const createUser = mutation({
     name: v.string(),
     email: v.string(),
     role: v.string(), // ✅ If you are using roles
+    password: v.string(),
   },
   handler: async (ctx, args) => {
     const user = await ctx.db.insert("users", {
