@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    /* Optional - You can modify these */
+    "allowJs": true,
+    "strict": true,
+    "jsx": "react-jsx",
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+
+    /* ✅ Required for Convex */
+    "target": "ESNext",
+    "lib": ["ES2021", "dom"],
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "noEmit": true
+  },
+  "include": ["./**/*"],
+  "exclude": ["./_generated"]
+}
