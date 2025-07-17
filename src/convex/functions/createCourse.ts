@@ -1,18 +1,21 @@
 import { mutation, MutationCtx } from "../_generated/server";
 import { v } from "convex/values";
 
-export const createUser = mutation({
+export const createCourse = mutation({
   args: {
-    name: v.string(),
-    email: v.string(),
-    role: v.string(),
+    title: v.string(),
+    description: v.string(),
+    price: v.number(),
+    videoUrl: v.string(),
+    createdBy: v.string(),
   },
-  handler: async (ctx: MutationCtx, args: { name: string; email: string; role: string }) => {
-    return await ctx.db.insert("users", {
-      name: args.name,
-      email: args.email,
-      role: args.role,
-      password: 0
+  handler: async (ctx: MutationCtx, args: { title: string; description: string; price: number; videoUrl: string; createdBy: string }) => {
+    return await ctx.db.insert("courses", {
+      title: args.title,
+      description: args.description,
+      price: args.price,
+      videoUrl: args.videoUrl,
+      createdBy: args.createdBy
     });
   },
 });

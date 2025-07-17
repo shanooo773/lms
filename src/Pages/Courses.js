@@ -1,5 +1,5 @@
 import React from 'react';
-import Courses_items from '../Components/Courses_items';
+import CoursesItems from '../Components/Courses_items';
 import Searchbar from '../Components/Searchbar';
 
 const Courses = () => (
@@ -29,7 +29,7 @@ const Courses = () => (
       </div>
     </div>
 
-    <Courses_items />
+    <CoursesItems />
   </>
 );
 

@@ -22,6 +22,7 @@ import CreditCard from "./Components/CreditCard";
 import Address from './Components/Address';
 import ProfileContact from './Components/ProfileContact';
 import CoursesSection from './Components/CoursesSection';
+import TeacherCourseUpload from './Components/TeacherCourseUpload';
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
   <Route path="/userprofile-address" element={<Address />} />
   <Route path="/userprofile-courses" element={<CoursesSection />} />
   <Route path="/userprofile-profilecontact" element={<ProfileContact />} />
+  <Route path="/teacher-upload-course" element={<TeacherCourseUpload userRole="teacher" userEmail="teacher@example.com" />} />
 </Routes>
 
         <img src={WhatsappIcon} alt='WhatsappIcon' className="cursor-pointer hover:scale-110" style={{width:"4rem", height:"2.5rem", position:'fixed', bottom:50, right:15}}/>

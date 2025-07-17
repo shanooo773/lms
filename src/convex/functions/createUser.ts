@@ -14,7 +14,7 @@ export const createUser = mutation({
       name: args.name,
       email: args.email,
       role: args.role,
-      password: 0
+      password: args.password
     });
   },
 });

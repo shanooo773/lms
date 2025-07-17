@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import CourseDisplay from '../Components/CourseDisplay';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareXmark } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
 import { useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
 
