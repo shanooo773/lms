@@ -29,6 +29,8 @@ import ProfileContact from './Components/ProfileContact';
 import CoursesSection from './Components/CoursesSection';
 import LearningPage from './Pages/LearningPage';
 import DashboardPage from './Pages/DashboardPage';
+import AdminDashboard from './Components/AdminDashboard';
+import InstructorDashboard from './Components/InstructorDashboard';
 
 function App() {
   return (
@@ -45,6 +47,8 @@ function App() {
   <Route path='/courses' element={<EnhancedCoursesPage />} />
   <Route path='/learn/:courseId' element={<LearningPage />} />
   <Route path='/dashboard' element={<DashboardPage />} />
+  <Route path='/admin' element={<AdminDashboard />} />
+  <Route path='/instructor' element={<InstructorDashboard />} />
   <Route path='/info' element={<Info />} />
   <Route path='/contact' element={<Contact />} />
   <Route path='/login' element={<Login />} />
