@@ -7,7 +7,7 @@ import Purchase from '../Components/Purchase';
 import CreditCard from '../Components/CreditCard';
 import Address from '../Components/Address';
 import ProfileContact from '../Components/ProfileContact';
-import { useAuth } from '../contexts/MockAuthContext';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function UserProfile() {
   const location = useLocation();
