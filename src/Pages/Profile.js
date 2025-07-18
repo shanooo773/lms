@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ProfileSidebar from '../Components/Profile_Sidebar';
 import ProfileEdit from '../Components/ProfileEdit';
 import Membership from '../Components/Membership';
@@ -7,37 +7,20 @@ import Purchase from '../Components/Purchase';
 import CreditCard from '../Components/CreditCard';
 import Address from '../Components/Address';
 import ProfileContact from '../Components/ProfileContact';
-import { useMutation } from "convex/react";
-import { api } from "../convex/_generated/api";
+import { useAuth } from '../contexts/MockAuthContext';
 
 export default function UserProfile() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [activeTab, setActiveTab] = useState('editprofile');
-  const createUser = useMutation(api.users.createUser); // ✅ must be inside component
 
-  // 🛡 Prevent multiple user creation calls
+  // Redirect to login if not authenticated
   useEffect(() => {
-    const alreadyCreated = sessionStorage.getItem('userCreated');
-
-    if (!alreadyCreated) {
-      const create = async () => {
-        try {
-          await createUser({
-            name: "John Doe",
-            email: "john@example.com",
-            role: "user",
-            password: "123456",
-          });
-          console.log("✅ User created successfully");
-          sessionStorage.setItem('userCreated', 'true'); // Prevent future calls
-        } catch (err) {
-          console.error("❌ Failed to create user:", err);
-        }
-      };
-
-      create();
+    if (!isAuthenticated) {
+      navigate('/login');
     }
-  }, [createUser]);
+  }, [isAuthenticated, navigate]);
 
   // 🚀 Handle tab switch based on URL path
   useEffect(() => {
@@ -75,6 +58,17 @@ export default function UserProfile() {
         return <ProfileEdit />;
     }
   };
+
+  // Show loading while authentication is being checked
+  if (!isAuthenticated) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-center">
+          <p className="text-lg">Please log in to access your profile...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen">
