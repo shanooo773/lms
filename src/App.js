@@ -1,6 +1,9 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './contexts/MockAuthContext';
+import { ConvexProvider } from 'convex/react';
+import { convex } from './convex/client';
+import { AuthProvider } from './contexts/AuthContext';
+import { ToastProvider } from './contexts/ToastContext';
 import Navbar from './Components/Navbar';
 import Courses from './Pages/Courses';
 import EnhancedCoursesPage from './Pages/EnhancedCoursesPage';
@@ -29,10 +32,12 @@ import DashboardPage from './Pages/DashboardPage';
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Navbar/>
-        <Routes>
+    <ConvexProvider client={convex}>
+      <ToastProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <Navbar/>
+            <Routes>
   <Route path='/' element={<Home />} />
   <Route path='/course/:id' element={<Pricing />} />
   <Route path='/coursedetails/:id' element={<CourseDetails />} />
@@ -63,6 +68,8 @@ function App() {
         <Footer />
       </BrowserRouter>
     </AuthProvider>
+  </ToastProvider>
+</ConvexProvider>
   );
 }
 

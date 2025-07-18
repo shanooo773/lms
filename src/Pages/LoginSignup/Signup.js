@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import background from '../../Assests/background.png';
-import { useAuth } from '../../contexts/MockAuthContext';
+import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../../contexts/ToastContext';
 
 export default function Signup() {
   const navigate = useNavigate();
   const { register } = useAuth();
+  const { success, error: showError } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -39,11 +41,13 @@ export default function Signup() {
 
       // Register user
       await register(formData.name, formData.email, formData.password);
+      success('Registration successful!');
       
       // Redirect to profile page
       navigate('/userprofile');
     } catch (err) {
       setError(err.message || 'Registration failed');
+      showError(err.message || 'Registration failed');
     } finally {
       setLoading(false);
     }

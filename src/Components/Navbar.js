@@ -3,19 +3,34 @@ import React, { useState, useEffect, useRef } from "react";
 import logo from "../Assests/trac_.png";
 import userIcon from "../Assests/icons8-user-50.png";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/MockAuthContext";
+import { useAuth } from "../contexts/AuthContext";
+import { useQuery } from 'convex/react';
+import { api } from '../convex/_generated/api';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [active, setActive] = useState("Home");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [showSearchResults, setShowSearchResults] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
+  const searchRef = useRef(null);
   const { user, logout, isAuthenticated } = useAuth();
+  
+  // Use the search query with debounced term
+  const searchResults = useQuery(
+    api.search.searchCourses,
+    debouncedSearchTerm ? { searchTerm: debouncedSearchTerm } : "skip"
+  );
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setDropdownOpen(false);
+    }
+    if (searchRef.current && !searchRef.current.contains(event.target)) {
+      setShowSearchResults(false);
     }
   };
 
@@ -25,6 +40,18 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleSearchChange = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+    
+    // Debounce search
+    clearTimeout(window.searchTimeout);
+    window.searchTimeout = setTimeout(() => {
+      setDebouncedSearchTerm(term);
+      setShowSearchResults(term.length > 0);
+    }, 300);
+  };
 
   const handleNavigation = (path) => {
     navigate(path);
@@ -58,6 +85,56 @@ const Navbar = () => {
             />
           </Link>
         </div>
+        
+        {/* Search Bar */}
+        <div className="order-2 flex-1 max-w-md mx-4 relative" ref={searchRef}>
+          <div className="relative">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              placeholder="Search courses..."
+              className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:border-blue-500 bg-white shadow-sm"
+            />
+            <svg
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          
+          {/* Search Results Dropdown */}
+          {showSearchResults && searchResults && searchResults.length > 0 && (
+            <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-64 overflow-y-auto z-50">
+              {searchResults.map((course) => (
+                <div
+                  key={course._id}
+                  className="p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+                  onClick={() => {
+                    navigate(`/coursedetails/${course._id}`);
+                    setShowSearchResults(false);
+                    setSearchTerm("");
+                    setDebouncedSearchTerm("");
+                  }}
+                >
+                  <h4 className="font-medium text-gray-900">{course.title}</h4>
+                  <p className="text-sm text-gray-600 truncate">{course.description}</p>
+                  <span className="text-sm text-blue-600">${course.price}</span>
+                </div>
+              ))}
+            </div>
+          )}
+          
+          {showSearchResults && debouncedSearchTerm && (!searchResults || searchResults.length === 0) && (
+            <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg p-3 z-50">
+              <p className="text-gray-500 text-center">No courses found</p>
+            </div>
+          )}
+        </div>
+        
         <div className="order-3 flex items-center">
           <ul
             className={`md:flex md:space-x-8 font-bold text-md ${
@@ -130,6 +207,36 @@ const Navbar = () => {
             >
               Dashboard
             </Link>
+            {user?.role === 'admin' && (
+              <Link
+                to={"/admin"}
+                className={`cursor-pointer font-bold ${
+                  active === "Admin" &&
+                  "text-red-600 font-bold border-b border-red-600"
+                }`}
+                onClick={() => {
+                  setOpen(false);
+                  setActive("Admin");
+                }}
+              >
+                Admin Panel
+              </Link>
+            )}
+            {(user?.role === 'instructor' || user?.role === 'admin') && (
+              <Link
+                to={"/instructor"}
+                className={`cursor-pointer font-bold ${
+                  active === "Instructor" &&
+                  "text-red-600 font-bold border-b border-red-600"
+                }`}
+                onClick={() => {
+                  setOpen(false);
+                  setActive("Instructor");
+                }}
+              >
+                Instructor
+              </Link>
+            )}
             <Link
               to={"/course"}
               className={`cursor-pointer font-bold ${
