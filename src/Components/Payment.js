@@ -10,7 +10,7 @@ export const Payment = () => {
        <div className=' sm:h-52 w-full mx-5 sm:mx-1  sm:w-fit flex flex-col  gap-5  md:ml-10 '>
             <p className='font-bold font-sans text-md lg:text-xl'>Card Information</p>
             <div className='bg-white p-4 flex flex-col gap-5 sm:px-10'>
-                    <img src={visaIcon} className='w-10 h-10 self-end ' />
+                    <img src={visaIcon} className='w-10 h-10 self-end ' alt="Visa card" />
                     <label className='text-sm text-gray-500 flex flex-col gap-2'>
                         <p>Card Number</p>
                         <input type='number' placeholder='0000 0000 0000 0000' className=' focus:outline-none  border-b-2 border-gray-400 w-fit' />

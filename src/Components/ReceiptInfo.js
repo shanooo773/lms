@@ -5,7 +5,7 @@ const ReceiptInfo = () => {
   return (
     <div className='bg-[#3F627E] px-6 sm:px-2 relative flex flex-col items-center justify-center py-10 gap-5'>
         <h2 className='text-white text-md text-center md:text-xl font-medium'>Please Enter Recipient's Information</h2>
-        <img src={roboImg} className='absolute right-0 top-0 w-[12%] ' />
+        <img src={roboImg} className='absolute right-0 top-0 w-[12%] ' alt="Robot illustration" />
         <div className='h-72 w-full sm:w-[30rem] bg-white rounded-3xl border border-black shadow-lg p-4 md:p-6'>
 
        <form className='flex flex-col gap-5 '>
