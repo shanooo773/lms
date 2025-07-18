@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import logo from "../Assests/trac_.png";
 import userIcon from "../Assests/icons8-user-50.png";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/MockAuthContext";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -10,6 +11,7 @@ const Navbar = () => {
   const [active, setActive] = useState("Home");
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
+  const { user, logout, isAuthenticated } = useAuth();
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -27,6 +29,12 @@ const Navbar = () => {
   const handleNavigation = (path) => {
     navigate(path);
     setDropdownOpen(false); 
+  };
+
+  const handleLogout = () => {
+    logout();
+    setDropdownOpen(false);
+    navigate('/');
   };
   return (
     <>
@@ -162,25 +170,50 @@ const Navbar = () => {
               Workshops
             </Link>
           </ul>
-          <Link to="/login">
-            <div
-              className="flex items-center justify-center py-1.5 bg-blue-600 px-2 rounded-full font-semibold hover:text-white md:ml-6 hover:scale-110 w-10 h-10"
-              style={{ backgroundColor: "#1676BC" }}
-            >
-              <img
-                onClick={() => navigate("/login")}
-                src={userIcon}
-                alt="Login"
-                className="object-contain"
-                style={{
-                  width: "5rem",
-                  height: "1.6rem",
-                  pointerEvents: "none",
-                  cursor: "pointer",
-                }}
-              />
+          {isAuthenticated ? (
+            // Show user dropdown when logged in
+            <div className="flex items-center">
+              <span className="text-sm font-medium mr-2 hidden md:block">
+                Welcome, {user?.name}
+              </span>
+              <div
+                className="flex items-center justify-center py-1.5 bg-green-600 px-2 rounded-full font-semibold hover:text-white md:ml-6 hover:scale-110 w-10 h-10 cursor-pointer"
+                onClick={() => navigate("/userprofile")}
+              >
+                <img
+                  src={userIcon}
+                  alt="Profile"
+                  className="object-contain"
+                  style={{
+                    width: "5rem",
+                    height: "1.6rem",
+                    pointerEvents: "none",
+                  }}
+                />
+              </div>
             </div>
-          </Link>
+          ) : (
+            // Show login button when not logged in
+            <Link to="/login">
+              <div
+                className="flex items-center justify-center py-1.5 bg-blue-600 px-2 rounded-full font-semibold hover:text-white md:ml-6 hover:scale-110 w-10 h-10"
+                style={{ backgroundColor: "#1676BC" }}
+              >
+                <img
+                  onClick={() => navigate("/login")}
+                  src={userIcon}
+                  alt="Login"
+                  className="object-contain"
+                  style={{
+                    width: "5rem",
+                    height: "1.6rem",
+                    pointerEvents: "none",
+                    cursor: "pointer",
+                  }}
+                />
+              </div>
+            </Link>
+          )}
           <div className="relative" ref={dropdownRef}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -199,7 +232,7 @@ const Navbar = () => {
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
               <path d="M6 10l6 6l6 -6h-12" />
             </svg>
-            {dropdownOpen && (
+            {dropdownOpen && isAuthenticated && (
               <div className="absolute right-0 mt-2 w-48 z-50 bg-white shadow-lg rounded-md py-2">
                 <button
                   className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200 text-left"
@@ -248,13 +281,26 @@ const Navbar = () => {
                   Contact
                 </button>
                 <button
-                  className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200 text-left"
-                  onClick={() => {
-                    // Handle logout logic here
-                    setDropdownOpen(false); // Close the dropdown after clicking
-                  }}
+                  className="block w-full px-4 py-2 text-gray-800 hover:bg-red-200 text-left text-red-600"
+                  onClick={handleLogout}
                 >
                   Logout
+                </button>
+              </div>
+            )}
+            {dropdownOpen && !isAuthenticated && (
+              <div className="absolute right-0 mt-2 w-48 z-50 bg-white shadow-lg rounded-md py-2">
+                <button
+                  className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200 text-left"
+                  onClick={() => handleNavigation("/login")}
+                >
+                  Login
+                </button>
+                <button
+                  className="block w-full px-4 py-2 text-gray-800 hover:bg-gray-200 text-left"
+                  onClick={() => handleNavigation("/signup")}
+                >
+                  Sign Up
                 </button>
               </div>
             )}

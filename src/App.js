@@ -1,5 +1,6 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/MockAuthContext';
 import Navbar from './Components/Navbar';
 import Courses from './Pages/Courses';
 import EnhancedCoursesPage from './Pages/EnhancedCoursesPage';
@@ -28,7 +29,7 @@ import DashboardPage from './Pages/DashboardPage';
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <BrowserRouter>
         <Navbar/>
         <Routes>
@@ -61,7 +62,7 @@ function App() {
         <img src={WhatsappIcon} alt='WhatsappIcon' className="cursor-pointer hover:scale-110" style={{width:"4rem", height:"2.5rem", position:'fixed', bottom:50, right:15}}/>
         <Footer />
       </BrowserRouter>
-    </>
+    </AuthProvider>
   );
 }
 
