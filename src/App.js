@@ -1,6 +1,9 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './contexts/MockAuthContext';
+import { ConvexProvider } from 'convex/react';
+import { convex } from './convex/client';
+import { AuthProvider } from './contexts/AuthContext';
+import { ToastProvider } from './contexts/ToastContext';
 import Navbar from './Components/Navbar';
 import Courses from './Pages/Courses';
 import EnhancedCoursesPage from './Pages/EnhancedCoursesPage';
@@ -26,13 +29,17 @@ import ProfileContact from './Components/ProfileContact';
 import CoursesSection from './Components/CoursesSection';
 import LearningPage from './Pages/LearningPage';
 import DashboardPage from './Pages/DashboardPage';
+import AdminDashboard from './Components/AdminDashboard';
+import InstructorDashboard from './Components/InstructorDashboard';
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Navbar/>
-        <Routes>
+    <ConvexProvider client={convex}>
+      <ToastProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <Navbar/>
+            <Routes>
   <Route path='/' element={<Home />} />
   <Route path='/course/:id' element={<Pricing />} />
   <Route path='/coursedetails/:id' element={<CourseDetails />} />
@@ -40,6 +47,8 @@ function App() {
   <Route path='/courses' element={<EnhancedCoursesPage />} />
   <Route path='/learn/:courseId' element={<LearningPage />} />
   <Route path='/dashboard' element={<DashboardPage />} />
+  <Route path='/admin' element={<AdminDashboard />} />
+  <Route path='/instructor' element={<InstructorDashboard />} />
   <Route path='/info' element={<Info />} />
   <Route path='/contact' element={<Contact />} />
   <Route path='/login' element={<Login />} />
@@ -63,6 +72,8 @@ function App() {
         <Footer />
       </BrowserRouter>
     </AuthProvider>
+  </ToastProvider>
+</ConvexProvider>
   );
 }
 

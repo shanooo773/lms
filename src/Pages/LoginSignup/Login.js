@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import background from '../../Assests/background.png';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/MockAuthContext';
+import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../../contexts/ToastContext';
 
 export default function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { success, error: showError } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -24,11 +26,13 @@ export default function Login() {
 
       // Login user
       await login(email, password);
+      success('Login successful!');
       
       // Redirect to profile page
       navigate('/userprofile');
     } catch (err) {
       setError(err.message || 'Login failed');
+      showError(err.message || 'Login failed');
     } finally {
       setLoading(false);
     }

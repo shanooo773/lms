@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import uploadimage from "../Assests/download.png";
-import { useAuth } from '../contexts/MockAuthContext';
+import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../contexts/ToastContext';
 
 export default function ProfileEdit() {
   const { user, updateProfile } = useAuth();
+  const { success, error: showError } = useToast();
   const [selectedImage, setSelectedImage] = useState(uploadimage);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -70,12 +72,16 @@ export default function ProfileEdit() {
       // Only update if there are changes
       if (Object.keys(updates).length > 0) {
         await updateProfile(updates);
+        success('Profile updated successfully!');
+      } else {
+        success('No changes to save.');
       }
 
       setIsEditing(false);
       setFormData(prev => ({ ...prev, password: '' })); // Clear password field
     } catch (err) {
       setError(err.message || 'Failed to update profile');
+      showError(err.message || 'Failed to update profile');
     } finally {
       setLoading(false);
     }
