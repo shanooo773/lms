@@ -8,7 +8,7 @@ export default defineSchema({
     name: v.string(),
     email: v.string(),
     role: v.union(v.literal("student"), v.literal("instructor"), v.literal("admin")),
-    createdAt: v.number(),
+    createdAt: v.optional(v.number()),
     password: v.optional(v.string()),
   }).index("by_email", ["email"]),
 
