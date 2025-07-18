@@ -179,7 +179,7 @@ const AdminDashboard = () => {
                   </span>
                 </td>
                 <td className="px-4 py-2 text-sm text-gray-600">
-                  {new Date(user.createdAt).toLocaleDateString()}
+                  {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Unknown'}
                 </td>
               </tr>
             ))}
