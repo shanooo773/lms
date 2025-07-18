@@ -12,7 +12,7 @@ import { api } from "../convex/_generated/api";
 const Pricing = () => {
   const createUser = useMutation(api.users.createUser); // ✅ valid inside component
   const { id } = useParams();
-  const filtercourse = dummydata.filter((e) => e.id == id);
+  const filtercourse = dummydata.filter((e) => e.id === id);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });

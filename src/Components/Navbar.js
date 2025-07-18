@@ -97,6 +97,32 @@ const Navbar = () => {
               Contact
             </a>
             <Link
+              to={"/courses"}
+              className={`cursor-pointer font-bold ${
+                active === "Courses" &&
+                "text-red-600 font-bold border-b border-red-600"
+              }`}
+              onClick={() => {
+                setOpen(false);
+                setActive("Courses");
+              }}
+            >
+              Browse Courses
+            </Link>
+            <Link
+              to={"/dashboard"}
+              className={`cursor-pointer font-bold ${
+                active === "Dashboard" &&
+                "text-red-600 font-bold border-b border-red-600"
+              }`}
+              onClick={() => {
+                setOpen(false);
+                setActive("Dashboard");
+              }}
+            >
+              Dashboard
+            </Link>
+            <Link
               to={"/course"}
               className={`cursor-pointer font-bold ${
                 active === "Men" &&
@@ -107,7 +133,7 @@ const Navbar = () => {
                 setActive("Men");
               }}
             >
-              Courses
+              Old Courses
             </Link>
             <Link
               to={"/pricing"}
