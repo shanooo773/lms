@@ -1,33 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import background from '../Assests/background.png';
 import About from './About';
 import Contact from './Contact';
 import ChooseUs from './ChooseUs';
 import PopularCourses from './PopularCourses';
-import { useMutation } from "convex/react";
-import { api } from "../convex/_generated/api";
 
 export default function Home() {
-  const createUser = useMutation(api.users.createUser);
-
-  useEffect(() => {
-    const createDefaultUser = async () => {
-      try {
-        await createUser({
-          name: "John Doe",
-          email: "john@example.com",
-          role: "student",
-          password: "123456",
-        });
-        console.log("User created");
-      } catch (error) {
-        console.error("Error creating user:", error);
-      }
-    };
-
-    // Optional: Only create user if not already created or based on some condition
-    createDefaultUser();
-  }, [createUser]);
 
   return (
     <>

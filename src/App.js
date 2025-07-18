@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import Courses from './Pages/Courses';
+import EnhancedCoursesPage from './Pages/EnhancedCoursesPage';
 import Footer from './Components/Footer';
 import Pricing from './Pages/Pricing';
 import Login from './Pages/LoginSignup/Login';
@@ -22,6 +23,8 @@ import CreditCard from "./Components/CreditCard";
 import Address from './Components/Address';
 import ProfileContact from './Components/ProfileContact';
 import CoursesSection from './Components/CoursesSection';
+import LearningPage from './Pages/LearningPage';
+import DashboardPage from './Pages/DashboardPage';
 
 function App() {
   return (
@@ -33,6 +36,9 @@ function App() {
   <Route path='/course/:id' element={<Pricing />} />
   <Route path='/coursedetails/:id' element={<CourseDetails />} />
   <Route path='/course' element={<Courses />} />
+  <Route path='/courses' element={<EnhancedCoursesPage />} />
+  <Route path='/learn/:courseId' element={<LearningPage />} />
+  <Route path='/dashboard' element={<DashboardPage />} />
   <Route path='/info' element={<Info />} />
   <Route path='/contact' element={<Contact />} />
   <Route path='/login' element={<Login />} />
