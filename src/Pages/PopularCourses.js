@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
+import HoverableImage from '../Components/HoverableImage';
 
 export default function PopularCourses() {
   const createUser = useMutation(api.users.createUser);
@@ -71,7 +72,13 @@ export default function PopularCourses() {
               {dummydata.map((course) => (
                 <Link onClick={() => window.scrollTo(0, 0)} to={`/coursedetails/${course.id}`} key={course.id}>
                   <div className="bg-white border border-black rounded-lg shadow-md hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col mx-2">
-                    <img src={course.image} alt={course.title} className="object-cover w-full h-48 rounded-t-lg" />
+                    <HoverableImage 
+                      src={course.image} 
+                      alt={course.title} 
+                      className="object-cover w-full h-48 rounded-t-lg" 
+                      hoverClassName="transform scale-105 shadow-lg"
+                      containerClassName="overflow-hidden rounded-t-lg"
+                    />
                     <div className="p-5">
                       <h3 className="text-xl font-semibold text-center">{course.title}</h3>
                       <p className="text-center text-gray-500 mb-4">BY: {course.author}</p>

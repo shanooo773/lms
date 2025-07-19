@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import dummydata from "../Components/Dummydata";
 import Certificate from "../Components/Certificate";
 import authorImage from "../Assests/author.jpeg";
+import HoverableImage from "../Components/HoverableImage";
 
 import {
   FaVideo,
@@ -126,10 +127,12 @@ const CourseDetail = () => {
       case "Author":
         return (
           <div className="flex flex-col md:flex-row items-center">
-            <img
+            <HoverableImage
               src={authorImage}
-              className=" w-1/2 sm:w-1/3 lg:w-1/4 h-full mb-4 md:mb-0"
+              className="w-1/2 sm:w-1/3 lg:w-1/4 h-full mb-4 md:mb-0"
               alt="Author"
+              hoverClassName="transform scale-125 shadow-xl"
+              containerClassName="relative overflow-visible"
             />
             <div className="md:ml-4">
               <div className="flex">
@@ -174,10 +177,12 @@ const CourseDetail = () => {
           className={`w-full md:w-64 p-4 bg-gray-200 `}
          
         >
-          <img
+          <HoverableImage
             src={course.image}
             className="w-full h-auto mb-4"
             alt={course.title}
+            hoverClassName="transform scale-110 shadow-lg"
+            containerClassName="relative overflow-visible"
           />
           <h2 className="text-xl font-bold mb-2">{course.title}</h2>
           <div className="mb-4">
